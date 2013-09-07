@@ -3,7 +3,11 @@ var path = require('path');
 var _ = require('underscore');
 
 var parsers = exports;
-parsers.defaults = {};
+
+parsers.defaults = function(defaults) {
+  return _(parsers.defaults).extend(defaults || {});
+};
+
 parsers.defaults.encoding = 'utf8';
 parsers.defaults.indicator = /-{3,}/;
 parsers.defaults.ignore = new RegExp([
@@ -14,7 +18,6 @@ parsers.defaults.ignore = new RegExp([
 ].join('|'), 'g');
 
 parsers.registry = {};
-
 parsers.register = function(name, fn) {
   parsers.registry[name] = parsers.make(fn);
   return this;
