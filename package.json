@@ -1,0 +1,27 @@
+{
+  "name": "matter",
+  "version": "0.0.0",
+  "description": "Flexible front matter parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:justinvdm/matter.git"
+  },
+  "keywords": [
+    "front matter",
+    "metadata"
+  ],
+  "author": "justinvdm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justinvdm/matter/issues"
+  },
+  "devDependencies": {
+    "grunt-mocha-test": "~0.6.3",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.4"
+  }
+}
