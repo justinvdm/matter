@@ -1,4 +1,6 @@
-window.assert = require('assert');
+var path = require('path');
+
+global.assert = require('assert');
 
 global.paths = {};
 global.paths.base = process.env.PWD;
