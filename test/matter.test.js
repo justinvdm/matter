@@ -1,5 +1,4 @@
 describe("matter", function() {
-  var path = require('path');
   var matter = require(paths.src('./'));
 
   describe(".json", function() {

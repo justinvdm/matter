@@ -2,6 +2,11 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 
+var re = {};
+re.trailingWhitespace = /\s+$/g;
+re.trailingLineWhitespace = /\s+\n/g;
+re.leadingSpace = /\ */;
+
 var parsers = exports;
 
 parsers.defaults = function(defaults) {
@@ -9,7 +14,7 @@ parsers.defaults = function(defaults) {
 };
 
 parsers.defaults.encoding = 'utf8';
-parsers.defaults.indicator = /-{3,}/;
+parsers.defaults.indicator = /---/;
 parsers.defaults.ignore = new RegExp([
   '(\\/\\/)',
   '(\\/\\*)',
@@ -21,6 +26,35 @@ parsers.registry = {};
 parsers.register = function(name, fn) {
   parsers.registry[name] = parsers.make(fn);
   return this;
+};
+
+parsers.unindent = function(data) {
+  var lines = data.split('\n');
+
+  var indentSize = lines
+    .reduce(function(min, curr) {
+      if (!curr) { return min; }
+      var match = curr.match(re.leadingSpace);
+      return Math.min(min, match[0].length);
+    }, Infinity);
+
+  return lines
+    .map(function(line) { return line.slice(indentSize); })
+    .join('\n');
+};
+
+parsers.clean = function(data, options) {
+  options = _(options || {}).defaults({
+    ignore: parsers.defaults.ignore,
+  });
+
+  data = data
+    .trim()
+    .replace(options.ignore, '')
+    .replace(re.trailingWhitespace, '')
+    .replace(re.trailingLineWhitespace, '\n');
+
+  return parsers.unindent(data);
 };
 
 parsers.extract = function(data, options) {
@@ -44,10 +78,7 @@ parsers.extract = function(data, options) {
   var tailMatch = data.match(options.indicators.tail);
   data = data.slice(0, tailMatch.index);
 
-  // strip out unwanted characters
-  data = data.replace(options.ignore, '');
-
-  return data;
+  return parsers.clean(data);
 };
 
 parsers.make = function(fn) {
