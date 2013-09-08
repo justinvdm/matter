@@ -66,7 +66,7 @@ matter.json.inFile('./stuff.md', function(err, data) {
 - `string`: A string containing the front matter to be parsed
 - `options`: An object of options
   - `encoding` (default=`'utf8'`): The `encoding` to be used when reading the file
-  - `ignore`: A regex or string representing tokens to be ignored when extracting the front matter. Used to extract the front matter. The tokens ignored by default are `//`, `/`, `/`, `#`.
+  - `ignore`: A regex or string representing tokens to be ignored when extracting the front matter. Used to extract the front matter. The tokens ignored by default are `//`, `/*`, `*/`, `#`.
   - `indicator` (default=`/---/`): A regex or string to use as the front matter head and tail indicators
   - `indicators`: An object of options to use for the front matter head and tail indicators:
       - `head`: A regex or string to use as the front matter's head indicator. Defaults to `indicator`'s value.
@@ -83,7 +83,7 @@ console.log(matter.parse.yaml('---\nfoo: bar\n---'));
 - `filename`: A relative or absolute path to the file with the front matter to be parsed
 - `options`: An object of options:
   - `encoding` (default=`'utf8'`): The `encoding` to be used when reading the file
-  - `ignore`: A regex or string representing tokens to be ignored when extracting the front matter. Used to extract the front matter. The tokens ignored by default are `//`, `/`, `/`, `#`.
+  - `ignore`: A regex or string representing tokens to be ignored when extracting the front matter. Used to extract the front matter. The tokens ignored by default are `//`, `/*`, `*/`, `#`.
   - `indicator` (default=`/---/`): A regex or string to use as the front matter head and tail indicators
   - `indicators`: An object of options to use for the front matter head and tail indicators:
       - `head`: A regex or string to use as the front matter's head indicator. Defaults to `indicator`'s value.
@@ -144,7 +144,7 @@ matter.parsers.unregister('odd');
 - `overrides`: An object containing the new defaults. `matter` uses the
 following defaults:
   - `encoding` (default=`'utf8'`): The `encoding` to be used when reading files
-  - `ignore`: A regex or string representing tokens to be ignored when extracting the front matter. Used to extract the front matter. The tokens ignored by default are `//`, `/`, `/`, `#`.
+  - `ignore`: A regex or string representing tokens to be ignored when extracting the front matter. Used to extract the front matter. The tokens ignored by default are `//`, `/*`, `*/`, `#`.
   - `indicator` (default=`/---/`): A regex or string to use as the front matter head and tail indicators
   - `indicators`: An object of options to use for the front matter head and tail indicators:
       - `head`: A regex or string to use as the front matter's head indicator. Defaults to `indicator`'s value.
