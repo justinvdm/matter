@@ -11,7 +11,10 @@ re.leadingSpace = /\ */;
 var parsers = exports;
 
 parsers.defaults = function(defaults) {
-  return _(parsers.defaults).extend(defaults || {});
+  if (!defaults) { return _(parsers.defaults).copy(); }
+
+  _(parsers.defaults).extend(defaults || {});
+  return this;
 };
 
 parsers.defaults.encoding = 'utf8';
