@@ -25,7 +25,15 @@ parsers.defaults.ignore = new RegExp([
 
 parsers.registry = {};
 parsers.register = function(name, fn) {
+  if (name in parsers.registry) {
+    throw new Error("Parser '" + name + "' already exists");
+  }
+
   parsers.registry[name] = parsers.make(fn);
+  return this;
+};
+parsers.unregister = function(name) {
+  delete parsers.registry[name];
   return this;
 };
 

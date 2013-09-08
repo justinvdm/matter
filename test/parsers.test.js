@@ -14,6 +14,38 @@ describe("parsers", function() {
     return obj;
   }
 
+  describe(".register", function() {
+    afterEach(function() {
+      parsers.unregister('odd');
+    });
+
+    it("should register the parser", function() {
+      assert(!('odd' in parsers.registry));
+      parsers.register('odd', oddFormat);
+      assert('odd' in parsers.registry);
+    });
+
+    it("should throw an error if the parser already exists", function() {
+      parsers.register('odd', oddFormat);
+
+      assert.throws(function() {
+        parsers.register('odd', oddFormat);
+      }, /Parser 'odd' already exists/);
+    });
+  });
+
+  describe(".unregister", function() {
+    beforeEach(function() {
+      parsers.register('odd', oddFormat);
+    });
+
+    it("should unregister the parser", function() {
+      assert('odd' in parsers.registry);
+      parsers.unregister('odd');
+      assert(!('odd' in parsers.registry));
+    });
+  });
+
   describe(".clean", function() {
     it("should ignore the configured ignore characters", function() {
       assert.equal(parsers.clean('!abc!', {ignore: /!/g}), 'abc');
