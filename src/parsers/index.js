@@ -3,7 +3,8 @@ var path = require('path');
 var _ = require('underscore');
 
 var re = {};
-re.trailingWhitespace = /\s+$/g;
+re.leadingNewlines = /^\n+/;
+re.trailingWhitespace = /\s+$/;
 re.trailingLineWhitespace = /\s+\n/g;
 re.leadingSpace = /\ */;
 
@@ -49,8 +50,8 @@ parsers.clean = function(data, options) {
   });
 
   data = data
-    .trim()
     .replace(options.ignore, '')
+    .replace(re.leadingNewlines, '')
     .replace(re.trailingWhitespace, '')
     .replace(re.trailingLineWhitespace, '\n');
 
@@ -59,7 +60,6 @@ parsers.clean = function(data, options) {
 
 parsers.extract = function(data, options) {
   options = _(options || {}).defaults({
-    ignore: parsers.defaults.ignore,
     indicator: parsers.defaults.indicator,
     indicators: parsers.defaults.indicators
   });
@@ -78,7 +78,7 @@ parsers.extract = function(data, options) {
   var tailMatch = data.match(options.indicators.tail);
   data = data.slice(0, tailMatch.index);
 
-  return parsers.clean(data);
+  return parsers.clean(data, options);
 };
 
 parsers.make = function(fn) {

@@ -1,0 +1,112 @@
+describe("parsers", function() {
+  var parsers = require(paths.src('./parsers'));
+
+  function oddFormat(data) {
+    var obj = {};
+
+    data
+      .split(',')
+      .map(function(kv) {
+        kv = kv.split('=');
+        obj[kv[0]] = kv[1];
+      });
+
+    return obj;
+  }
+
+  describe(".clean", function() {
+    it("should ignore the configured ignore characters", function() {
+      assert.equal(parsers.clean('!abc!', {ignore: /!/g}), 'abc');
+    });
+
+    it("should remove trailing whitespace", function() {
+      assert.equal(parsers.clean([
+        'abc    \n',
+        'def  \n',
+        'ghi\n '
+      ].join('')), [
+        'abc',
+        'def',
+        'ghi'
+      ].join('\n'));
+    });
+
+    it("should unindent the data as much as safely possible", function() {
+      assert.equal(parsers.clean([
+        '    abc',
+        '  def',
+        '   ghi'
+      ].join('\n')), [
+        '  abc',
+        'def',
+        ' ghi'
+      ].join('\n'));
+    });
+  });
+
+  describe(".extract", function() {
+    it("should extract the front matter chunk of the data", function() {
+      assert.deepEqual(
+        parsers.extract([
+        '---',
+        '{',
+        '  foo: "bar",',
+        '  baz: "qux"',
+        '}',
+        '---',
+        ].join('\n')), [
+        '{',
+        '  foo: "bar",',
+        '  baz: "qux"',
+        '}'].join('\n'));
+    });
+
+    it("should extract embedded front matters", function() {
+      assert.deepEqual(
+        parsers.extract([
+        '! ---',
+        '! {',
+        '!   foo: "bar",',
+        '!   baz: "qux"',
+        '! }',
+        '! ---',
+        ].join('\n'), {ignore: /!/g}),
+        ['{',
+        '  foo: "bar",',
+        '  baz: "qux"',
+        '}'].join('\n'));
+    });
+  });
+
+  describe(".make", function() {
+    describe("the constructed parser", function() {
+      var parser;
+
+      beforeEach(function() {
+        parser = parsers.make(oddFormat);
+      });
+
+      it("should parse a corresponding front matter", function() {
+        assert.deepEqual(
+          parser('---\nfoo=bar,baz=qux\n---\n'),
+          {foo: 'bar', baz: 'qux'});
+      });
+
+      describe(".inFile", function() {
+        it("should parse a corresponding front matter from a file", function(done) {
+          parser.inFile('./test/fixtures/odd-format.md', function(err, data) {
+            assert.deepEqual(data, {foo: 'bar', baz: 'qux'});
+            done();
+          });
+        });
+
+        it("should pass on file errors", function(done) {
+          parser.inFile('some/non-existent/path', function(err, data) {
+            assert.equal(err.errno, 34);
+            done();
+          });
+        });
+      });
+    });
+  });
+});
