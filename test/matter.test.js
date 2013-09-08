@@ -3,7 +3,7 @@ describe("matter", function() {
 
   describe(".json", function() {
     it("should parse a json front matter", function(done) {
-      matter.json.inFile('./test/fixtures/json/simple.md', function(err, data) {
+      matter.json.inFile('./test/fixtures/json-simple.md', function(err, data) {
         assert.deepEqual(data, {
           foo: 'bar',
           baz: 'qux',
@@ -19,7 +19,7 @@ describe("matter", function() {
     });
 
     it("should parse a json front matter embedded in comments", function(done) {
-      matter.json.inFile('./test/fixtures/json/embedded.js', function(err, data) {
+      matter.json.inFile('./test/fixtures/json-embedded.js', function(err, data) {
         assert.deepEqual(data, {
           foo: 'bar',
           baz: 'qux',
@@ -37,7 +37,7 @@ describe("matter", function() {
 
   describe(".yaml", function() {
     it("should parse a yaml front matter", function(done) {
-      matter.yaml.inFile('./test/fixtures/yaml/simple.md', function(err, data) {
+      matter.yaml.inFile('./test/fixtures/yaml-simple.md', function(err, data) {
         assert.deepEqual(data, {
           foo: 'bar',
           baz: 'qux',
@@ -53,7 +53,7 @@ describe("matter", function() {
     });
 
     it("should parse a yaml front matter embedded in comments", function(done) {
-      matter.yaml.inFile('./test/fixtures/yaml/embedded.js', function(err, data) {
+      matter.yaml.inFile('./test/fixtures/yaml-embedded.js', function(err, data) {
         assert.deepEqual(data, {
           foo: 'bar',
           baz: 'qux',
