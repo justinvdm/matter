@@ -64,18 +64,17 @@ parsers.extract = function(data, options) {
     indicators: parsers.defaults.indicators
   });
 
-  if (!options.indicators) {
-    options.indicators = {
-      head: options.indicator,
-      tail: options.indicator
-    };
-  }
+  if (!options.indicators) { options.indicators = {}; }
+  if (!options.indicators.head) { options.indicators.head = options.indicator; }
+  if (!options.indicators.tail) { options.indicators.tail = options.indicator; }
 
   // chop off the parts that don't 'matter' (that was lame :)
   var headMatch = data.match(options.indicators.head);
+  if (!headMatch) { throw new Error("Head indicator not found."); }
   data = data.slice(headMatch.index + headMatch[0].length);
 
   var tailMatch = data.match(options.indicators.tail);
+  if (!tailMatch) { throw new Error("Tail indicator not found."); }
   data = data.slice(0, tailMatch.index);
 
   return parsers.clean(data, options);

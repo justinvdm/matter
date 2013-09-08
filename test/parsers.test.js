@@ -76,6 +76,22 @@ describe("parsers", function() {
         '  baz: "qux"',
         '}'].join('\n'));
     });
+
+    it("should throw an error if the head indicator isn't found", function() {
+      assert.throws(function() {
+        parsers.extract('abcT', {
+          indicators: {head: 'H', tail: 'T'}
+        });
+      }, /Head indicator not found/);
+    });
+
+    it("should throw an error if the head indicator isn't found", function() {
+      assert.throws(function() {
+        parsers.extract('Habc', {
+          indicators: {head: 'H', tail: 'T'}
+        });
+      }, /Tail indicator not found/);
+    });
   });
 
   describe(".make", function() {
