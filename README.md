@@ -3,14 +3,14 @@ Flexible front matter parser.
 
 ```javascript
 matter.yaml('---\nfoo: bar\n---');
-// => {foo: bar}
+// => {foo: 'bar'}
 
 matter.yaml.inFile('./stuff.md', function(err, data) {
   // ...
 });
 
 matter.json('---\n{"foo": "bar"}\n---');
-// => {foo: bar}
+// => {foo: 'bar'}
 
 matter.json.inFile('./stuff.md', function(err, data) {
   // ...
@@ -29,7 +29,7 @@ Alias to `matter.parse.yaml`.
 
 ```javascript
 console.log(matter.yaml('---\nfoo: bar\n---'));
-// => {foo: bar}
+// => {foo: 'bar'}
 ```
 
 ### `matter.yaml.inFile(filepath, [options], callback)`
@@ -48,7 +48,7 @@ Alias to `matter.parse.json`.
 
 ```javascript
 console.log(matter.json('---\n{"foo": "bar"}\n---'));
-// => {foo: bar}
+// => {foo: 'bar'}
 ```
 
 ### `matter.json.inFile(filepath, [options], callback)`
@@ -76,7 +76,7 @@ Parses a string containing a front matter using the parser registered as `parser
 
 ```javascript
 console.log(matter.parse.yaml('---\nfoo: bar\n---'));
-// => {foo: bar}
+// => {foo: 'bar'}
 ```
 
 ### `matter.parse.<parserName>.inFile(filepath, [options], callback)`
