@@ -106,8 +106,20 @@ parsers.make = function(fn) {
     });
 
     fs.readFile(path.resolve(filename), options, function(err, data) {
-      if (!err) { done(err, parser(data, options)); }
-      else done(err);
+      if (err) {
+        done(err);
+        return;
+      }
+
+      try {
+        parser(data, options);
+      }
+      catch (e) {
+        done(e);
+        return;
+      }
+
+      done(null, parser(data, options));
     });
   };
 

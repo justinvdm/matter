@@ -148,8 +148,17 @@ describe("parsers", function() {
           });
         });
 
-        it("should pass on file errors", function(done) {
-          parser.inFile('some/non-existent/path', function(err, data) {
+        it("should pass on parsing errors", function(done) {
+          parser.inFile('./test/fixtures/bad-matter.md', function(err) {
+            assert.equal(
+              err.toString(),
+              'Error: Tail indicator not found.');
+            done();
+          });
+        });
+
+        it("should pass on file read errors", function(done) {
+          parser.inFile('some/non-existent/path', function(err) {
             assert.equal(err.errno, 34);
             done();
           });
