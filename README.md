@@ -24,7 +24,7 @@ matter.json.inFile('./stuff.md', function(err, data) {
 
 ## API
 
-### `matter.yaml(string, [options])`
+#### `matter.yaml(string, [options])`
 Alias to `matter.parse.yaml`.
 
 ```javascript
@@ -32,7 +32,7 @@ console.log(matter.yaml('---\nfoo: bar\n---'));
 // => {foo: 'bar'}
 ```
 
-### `matter.yaml.inFile(filepath, [options], callback)`
+#### `matter.yaml.inFile(filepath, [options], callback)`
 Alias to `matter.parse.yaml.inFile`.
 
 ```javascript
@@ -43,7 +43,7 @@ matter.yaml.inFile('./stuff.md', function(err, data) {
 });
 ```
 
-### `matter.json(string, [options])`
+#### `matter.json(string, [options])`
 Alias to `matter.parse.json`.
 
 ```javascript
@@ -51,7 +51,7 @@ console.log(matter.json('---\n{"foo": "bar"}\n---'));
 // => {foo: 'bar'}
 ```
 
-### `matter.json.inFile(filepath, [options], callback)`
+#### `matter.json.inFile(filepath, [options], callback)`
 Alias to `matter.parse.json.inFile`.
 
 ```javascript
@@ -62,7 +62,7 @@ matter.json.inFile('./stuff.md', function(err, data) {
 });
 ```
 
-### `matter.parse.<parserName>(string, [options])`
+#### `matter.parse.<parserName>(string, [options])`
 - `string`: A string containing the front matter to be parsed
 - `options`: An object of options
   - `encoding` (default=`'utf8'`): The `encoding` to be used when reading the file
@@ -79,7 +79,7 @@ console.log(matter.parse.yaml('---\nfoo: bar\n---'));
 // => {foo: 'bar'}
 ```
 
-### `matter.parse.<parserName>.inFile(filepath, [options], callback)`
+#### `matter.parse.<parserName>.inFile(filepath, [options], callback)`
 - `filename`: A relative or absolute path to the file with the front matter to be parsed
 - `options`: An object of options:
   - `encoding` (default=`'utf8'`): The `encoding` to be used when reading the file
@@ -103,7 +103,7 @@ matter.parse.yaml.inFile('./stuff.md', function(err, data) {
 });
 ```
 
-### `matter.parsers.register(name, fn)`
+#### `matter.parsers.register(name, fn)`
 - `name`: The name of the parser. Once registered, the parser becomes a
 property of `matter.parse`.
 - `fn(data)`: The function to convert the extracted front matter string into
@@ -131,7 +131,7 @@ console.log(matter.parse.odd('---\nfoo=bar,baz=qux\n---\n'));
 // => {foo: 'bar', baz: 'qux'});
 ```
 
-### `matter.parsers.unregister(name)`
+#### `matter.parsers.unregister(name)`
 - `name`: The name of the parser to unregister.
 
 Unregisters a parser.
@@ -140,7 +140,7 @@ Unregisters a parser.
 matter.parsers.unregister('odd');
 ```
 
-### `matter.parsers.defaults(overrides)`
+#### `matter.parsers.defaults(overrides)`
 - `overrides`: An object containing the new defaults. `matter` uses the
 following defaults:
   - `encoding` (default=`'utf8'`): The `encoding` to be used when reading files
@@ -156,7 +156,7 @@ Sets new defaults for parsing.
 matter.parsers.defaults({ignore: /!/g});
 ```
 
-### `matter.parsers.defaults()`
+#### `matter.parsers.defaults()`
 Returns a shallow copy of the parsing defaults.
 
 ```javascript
