@@ -65,7 +65,6 @@ matter.json.inFile('./stuff.md', function(err, data) {
 #### `matter.parse.<parserName>(string, [options])`
 - `string`: A string containing the front matter to be parsed
 - `options`: An object of options
-  - `encoding` (default=`'utf8'`): The `encoding` to be used when reading the file
   - `ignore`: A regex or string representing tokens to be ignored when extracting the front matter. Used to extract the front matter. The tokens ignored by default are `//`, `/*`, `*/`, `#`.
   - `indicator` (default=`/---/`): A regex or string to use as the front matter head and tail indicators
   - `indicators`: An object of options to use for the front matter head and tail indicators:
