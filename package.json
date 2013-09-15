@@ -25,6 +25,7 @@
     "grunt-contrib-jshint": "~0.6.4"
   },
   "dependencies": {
-    "js-yaml": "~2.1.0"
+    "js-yaml": "~2.1.0",
+    "underscore": "~1.5.2"
   }
 }
