@@ -12,7 +12,6 @@ var parsers = exports;
 
 parsers.defaults = function(defaults) {
   if (!defaults) { return _(parsers.defaults).copy(); }
-
   _(parsers.defaults).extend(defaults || {});
   return this;
 };
@@ -43,12 +42,11 @@ parsers.unregister = function(name) {
 parsers.unindent = function(data) {
   var lines = data.split('\n');
 
-  var indentSize = lines
-    .reduce(function(min, curr) {
-      if (!curr) { return min; }
-      var match = curr.match(re.leadingSpace);
-      return Math.min(min, match[0].length);
-    }, Infinity);
+  var indentSize = lines.reduce(function(min, curr) {
+    if (!curr) { return min; }
+    var match = curr.match(re.leadingSpace);
+    return Math.min(min, match[0].length);
+  }, Infinity);
 
   return lines
     .map(function(line) { return line.slice(indentSize); })
