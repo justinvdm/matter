@@ -1,6 +1,6 @@
 {
   "name": "matter",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Flexible front matter parser",
   "main": "index.js",
   "scripts": {
