@@ -5,14 +5,14 @@ Flexible front matter parser.
 matter.yaml('---\nfoo: bar\n---');
 // => {foo: 'bar'}
 
-matter.yaml.inFile('./stuff.md', function(err, data) {
+matter.yaml.inFile('./stuff.md', function(err, metadata) {
   // ...
 });
 
 matter.json('---\n{"foo": "bar"}\n---');
 // => {foo: 'bar'}
 
-matter.json.inFile('./stuff.md', function(err, data) {
+matter.json.inFile('./stuff.md', function(err, metadata) {
   // ...
 });
 ```
@@ -36,9 +36,9 @@ console.log(matter.yaml('---\nfoo: bar\n---'));
 Alias to `matter.parse.yaml.inFile`.
 
 ```javascript
-matter.yaml.inFile('./stuff.md', function(err, data) {
+matter.yaml.inFile('./stuff.md', function(err, metadata, data) {
   if (!err) {
-    console.log(data);
+    console.log(metadata);
   };
 });
 ```
@@ -55,7 +55,7 @@ console.log(matter.json('---\n{"foo": "bar"}\n---'));
 Alias to `matter.parse.json.inFile`.
 
 ```javascript
-matter.json.inFile('./stuff.md', function(err, data) {
+matter.json.inFile('./stuff.md', function(err, metadata, data) {
   if (!err) {
     console.log(data);
   };
@@ -88,16 +88,17 @@ console.log(matter.parse.yaml('---\nfoo: bar\n---'));
       - `head`: A regex or string to use as the front matter's head indicator. Defaults to `indicator`'s value.
       - `tail`: A regex or string to use as the front matter's tail indicator. Defaults to `indicators`'s value
   - *[[`fs.readFile`](http://nodejs.org/api/fs.html#fs_fs_readfile_filename_options_callback) options]*
-- `callback(err, data)`: A function to be called when the file has been read and the front matter has been parsed.
+- `callback(err, metadata, data)`: A function to be called when the file has been read and the front matter has been parsed.
   - `err`: An error object for an error which may have occured while reading and parsing the file. `null` if no error occured.
-  - `data`: An object containing the extracted and parsed front matter data
+  - `metadata`: An object containing the extracted and parsed front matter data
+  - `data`: A string of the actual data contained in the file
 
 Parses a file containing a front matter using the parser registered as `parserName`.
 
 ```javascript
-matter.parse.yaml.inFile('./stuff.md', function(err, data) {
+matter.parse.yaml.inFile('./stuff.md', function(err, metadata, data) {
   if (!err) {
-    console.log(data);
+    console.log(metadata);
   };
 });
 ```
