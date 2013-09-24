@@ -142,13 +142,20 @@ describe("parsers", function() {
 
       describe(".inFile", function() {
         it("should parse a corresponding front matter from a file", function(done) {
-          parser.inFile('./test/fixtures/odd-format.md', function(err, data) {
-            assert.deepEqual(data, {foo: 'bar', baz: 'qux'});
+          parser.inFile('./test/fixtures/odd-format.md', function(err, metadata) {
+            assert.deepEqual(metadata, {foo: 'bar', baz: 'qux'});
             done();
           });
         });
 
-        it("should pass on parsing errors", function(done) {
+        it("should pass along the actual file data", function(done) {
+          parser.inFile('./test/fixtures/odd-format.md', function(err, metadata, data) {
+            assert.deepEqual(data, '---\nfoo=bar,baz=qux\n---\n');
+            done();
+          });
+        });
+
+        it("should pass along parsing errors", function(done) {
           parser.inFile('./test/fixtures/bad-matter.md', function(err) {
             assert.equal(
               err.toString(),
@@ -157,7 +164,7 @@ describe("parsers", function() {
           });
         });
 
-        it("should pass on file read errors", function(done) {
+        it("should pass along file read errors", function(done) {
           parser.inFile('some/non-existent/path', function(err) {
             assert.equal(err.errno, 34);
             done();

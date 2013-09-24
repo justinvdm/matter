@@ -113,14 +113,11 @@ parsers.make = function(fn) {
       }
 
       try {
-        parser(data, options);
+        done(null, parser(data, options), data);
       }
       catch (e) {
         done(e);
-        return;
       }
-
-      done(null, parser(data, options));
     });
   };
 
