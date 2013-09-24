@@ -57,7 +57,7 @@ Alias to `matter.parse.json.inFile`.
 ```javascript
 matter.json.inFile('./stuff.md', function(err, metadata, data) {
   if (!err) {
-    console.log(data);
+    console.log(metadata);
   };
 });
 ```
